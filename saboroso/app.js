@@ -24,6 +24,7 @@ app.use(function(req, res, next){
 
   form.parse(req, function(err, fields, files){
 
+    req.body = fields;
     req.fields = fields;
     req.files = files;
 

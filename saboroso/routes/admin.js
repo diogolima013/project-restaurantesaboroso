@@ -2,6 +2,7 @@ var express = require ('express');
 var users = require('./../inc/users');
 var admin = require('./../inc/admin')
 var menus = require('./../inc/menus')
+var reservations = require('./../inc/reservations')
 var router = express.Router();
 
 router.use(function(req, res, next){
@@ -114,12 +115,54 @@ router.post('/menus', function(req, res, next){
 
 });
 
+router.delete('/menus/:id', function(req, res, next){
+
+    menus.delete(req.params.id).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
+
+});
+
 router.get('/reservations', function(req, res, next){
 
     res.render('admin/reservations', admin.getParams(req,{
         date: {}
     }));
 
+
+});
+
+router.post('/reservations', function(req, res, next){
+
+    reservations.save(req.fields, req.files).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
+
+});
+
+router.delete('/reservations/:id', function(req, res, next){
+
+    reservations.delete(req.params.id).then(results=>{
+
+        res.send(results);
+
+    }).catch(err=>{
+
+        res.send(err);
+
+    })
 
 });
 
