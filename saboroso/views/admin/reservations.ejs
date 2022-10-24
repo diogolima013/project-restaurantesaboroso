@@ -72,7 +72,7 @@
                   <td><%= row.people %></td>
                   <td><%= moment(row.date).format('DD [de] MMMM [de] YYYY') %></td>
                   <td><%= row.time %></td>
-                  <td><button type="button" class="btn btn-xs btn-info btn-update" data-toggle="modal" data-target="#modal-update"><i
+                  <td><button type="button" class="btn btn-xs btn-info btn-update"<i
                         class="fa fa-pencil"></i> Editar</button>&nbsp;<button type="button" class="btn btn-xs btn-danger btn-delete"><i
                         class="fa fa-trash"></i> Excluir</button></td>
                 </tr>
@@ -201,31 +201,31 @@
 
  <%- include('inc/footer') -%>
 
+<script src="/js/moment.min.js"></script>
 <script src="/js/hcode-formsave.js"></script>
- <script>
+<script src="/js/hcode-grid.js"></script>
 
-let formCreate = document.querySelector('#modal-create form');
+<script>
 
-formCreate.save().then(json=>{
+  new HcodeGrid({
+    deleteUrl:'/admin/reservations/${data.id}',
+    deleteMsg:'Deseja realmente excluir a reserva de ${data.name}?',
+    onUpdateLoad: (form, name, data) => {
 
-  window.location.reload();
+    let input = form.querySelector(`[name=${name}]`); 
 
-}).catch(err=>{
+    switch (name) {
 
-  console.log(err)
+      case 'date': 
+        if(input) input.value = moment(data[name]).format('YYYY-MM-DD')
+          break;
+      default:
+        if(input) input.value = data[name];
 
+    }
+
+  } 
 });
-
-let formUpdate = document.querySelector('#modal-update form');
-
-formUpdate.save().then(json=>{
-
-window.location.reload();
-
-}).catch(err=>{
-
-console.log(err)
-
-});
+  
 
  </script>
