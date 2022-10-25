@@ -83,16 +83,18 @@ class Pagination {
         let start = 0;
         let end = 0;
 
-        if (this.getTotalPages() < limitPagesNav) limitPagesNav = this.getTotalPages();
+        if (this.getTotalPages() < limitPagesNav) { limitPagesNav = this.getTotalPages(); 
+        }
 
         if ((this.getCurrentPage() - parseInt(limitPagesNav / 2)) < 1) {
             start = 1;
             end = limitPagesNav;
+
         } else if ((this.getCurrentPage() + parseInt(limitPagesNav / 2)) > this.getTotalPages()) {
             start = this.getTotalPages() - limitPagesNav;
             end = this.getTotalPages();
+        
         } else {
-
             start = this.getCurrentPage() - parseInt(limitPagesNav / 2);
             end = this.getCurrentPage() + parseInt(limitPagesNav / 2);
 
